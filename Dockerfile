@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM ubuntu:16.04
 MAINTAINER Rob Egan
 
 ENV DEB_URL https://mirror.oxfordnanoportal.com/software/analysis/python3-ont-albacore_0.8.4-1-trusty_all.deb
