@@ -5,7 +5,7 @@ Dockerfile for the Albacore basecaller from Oxford Nanopore
 cd into the directory containing the directory of reads
 
 ```bash
-docker run -v $(pwd):/root vera/albacore \
+docker run -v $(pwd):/root robegan21/albacore \
  -i relative/path/to/reads \
  -c /opt/albacore/FLO-MIN106_LSK208_2d.cfg \
  -s output \
