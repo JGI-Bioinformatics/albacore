@@ -9,14 +9,14 @@ ENV DEB_URL https://mirror.oxfordnanoportal.com/software/analysis/python3-ont-al
 
 RUN apt-get update  && \
     apt-get install -y wget python3-setuptools \
-     python3-h5py python3-numpy python3-pip \
+     python3-h5py python3-numpy \
      libboost-filesystem1.58.0 libboost-program-options1.58.0 \
      libboost-system1.58.0 libboost-log1.58.0 libboost-thread1.58.0 \
      libboost-python1.58.0 && \
     wget -qO albacore.deb $DEB_URL && \
     dpkg -i albacore.deb  && \
     apt-get install -fy && \
-    apt-get remove -y g++ gcc && \
+    apt-get remove -y wget && \
     apt-get autoremove -y && \
     apt-get clean && \
     apt-get autoclean && \
