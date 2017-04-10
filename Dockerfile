@@ -1,11 +1,13 @@
 FROM ubuntu:16.04
-MAINTAINER Rob Egan
+
+LABEL Maintainer="Rob Egan<RSEgan@lbl.gov>"
 
 WORKDIR /root
 
-ENV DEB_URL https://mirror.oxfordnanoportal.com/software/analysis/python3-ont-albacore_0.8.4-1-xenial_all.deb
-#ENV WHL_FILE ont_albacore-0.8.4-cp35-cp35m-manylinux1_x86_64.whl
-#ENV WHL_URL https://mirror.oxfordnanoportal.com/software/analysis/${WHL_FILE}
+ENV DEB_URL http://mirror.oxfordnanoportal.com/software/analysis/python3-ont-albacore_1.0.1-1~xenial_all.deb
+
+# This is necessary because the upgrade sometimes prompts for input
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update  && \
     apt-get install -y wget python3-setuptools \
@@ -13,19 +15,17 @@ RUN apt-get update  && \
      libboost-filesystem1.58.0 libboost-program-options1.58.0 \
      libboost-system1.58.0 libboost-log1.58.0 libboost-thread1.58.0 \
      libboost-python1.58.0 && \
+    wget -O- https://mirror.oxfordnanoportal.com/apt/ont-repo.pub | apt-key add - && \
     wget -qO albacore.deb $DEB_URL && \
-    dpkg -i albacore.deb  && \
-    apt-get install -fy && \
+    apt-get update && \
+    ( dpkg -i albacore.deb ; apt-get install -fy ) && \
     apt-get remove -y wget && \
     apt-get autoremove -y && \
     apt-get clean && \
     apt-get autoclean && \
-    rm -rf /var/lib/apt/lists/* albacore.deb
+    rm -rf /var/lib/apt/lists/* albacore.deb && \
+    find / -name '*.pyc' -exec rm {} \;
    
 
-#RUN wget -qO ${WHL_FILE} ${WHL_URL}
-
-ENTRYPOINT ["read_fast5_basecaller.py"]
-
-CMD ["-h"]
+CMD ["read_fast5_basecaller.py", "-h"]
 
