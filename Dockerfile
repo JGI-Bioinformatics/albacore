@@ -25,7 +25,7 @@ RUN apt-get update  && \
     apt-get autoremove -y && \
     apt-get clean && \
     apt-get autoclean && \
-    echo rm -rf /var/lib/apt/lists/* albacore.deb && \
+    rm -rf /var/lib/apt/lists/* albacore.deb && \
     find / -name '*.pyc' -exec rm {} \;
 
 CMD ["read_fast5_basecaller.py", "-h"]
