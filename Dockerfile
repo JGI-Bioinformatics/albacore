@@ -4,7 +4,7 @@ LABEL Maintainer="Rob Egan<RSEgan@lbl.gov>"
 
 WORKDIR /root
 
-ENV DEB_URL http://mirror.oxfordnanoportal.com/software/analysis/python3-ont-albacore_1.0.1-1~xenial_all.deb
+ENV DEB_URL https://mirror.oxfordnanoportal.com/software/analysis/python3-ont-albacore_1.1.0-1~xenial_all.deb
 
 # This is necessary because the upgrade sometimes prompts for input
 ENV DEBIAN_FRONTEND=noninteractive
