@@ -4,10 +4,14 @@ LABEL Maintainer="Rob Egan<RSEgan@lbl.gov>"
 
 WORKDIR /root
 
-ENV WHL_URL https://mirror.oxfordnanoportal.com/software/analysis/ont_albacore-2.1.10-cp35-cp35m-manylinux1_x86_64.whl 
+ARG WHL ont_albacore-2.1.10-cp35-cp35m-manylinux1_x86_64.whl
+
+ENV WHL_URL https://mirror.oxfordnanoportal.com/software/analysis/${WHL}
 
 # This is necessary because the upgrade sometimes prompts for input
 ENV DEBIAN_FRONTEND=noninteractive
+
+COPY downloads .
 
 RUN apt-get update  && \
     apt-get install -y strace wget python3-setuptools python3-pip \
@@ -15,8 +19,8 @@ RUN apt-get update  && \
      libboost-filesystem1.58.0 libboost-program-options1.58.0 \
      libboost-system1.58.0 libboost-log1.58.0 libboost-thread1.58.0 \
      libboost-python1.58.0 && \
-    wget $WHL_URL && \
-    pip3 install *.whl && \
+    ( [ -f ${WHL} ] || wget $WHL_URL ) && \
+    pip3 install ${WHL} && \
     rm *.whl && \
     apt-get remove -y wget && \
     apt-get autoremove -y && \
