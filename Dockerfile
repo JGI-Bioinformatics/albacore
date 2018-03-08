@@ -4,14 +4,12 @@ LABEL Maintainer="Rob Egan<RSEgan@lbl.gov>"
 
 WORKDIR /root
 
-ARG WHL ont_albacore-2.1.10-cp35-cp35m-manylinux1_x86_64.whl
+ARG WHL=ont_albacore-2.1.10-cp35-cp35m-manylinux1_x86_64.whl
 
 ENV WHL_URL https://mirror.oxfordnanoportal.com/software/analysis/${WHL}
 
 # This is necessary because the upgrade sometimes prompts for input
 ENV DEBIAN_FRONTEND=noninteractive
-
-COPY downloads .
 
 RUN apt-get update  && \
     apt-get install -y strace wget python3-setuptools python3-pip \
